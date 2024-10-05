@@ -19,6 +19,14 @@ func (b Board) Set(i int, j int, p Piece) {
 	b.Board[i][j] = p
 }
 
+func (b Board) Get(i int, j int) Piece {
+	return b.Board[i][j]
+}
+
+func (b Board) Unset(i int, j int) {
+	b.Board[i][j] = EMPTY;
+}
+
 func (b Board) Display() {
 	for i := 0; i < b.Size; i++ {
 		fmt.Println(b.Board[i])
