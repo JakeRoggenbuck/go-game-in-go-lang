@@ -23,6 +23,10 @@ func (b Board) Get(i int, j int) Piece {
 	return b.Board[i][j]
 }
 
+func (b Board) CanPlace(i int, j int) bool {
+	return b.Get(i, j) == EMPTY
+}
+
 func (b Board) Unset(i int, j int) {
 	b.Board[i][j] = EMPTY;
 }
@@ -33,19 +37,25 @@ func (b Board) Display() {
 	}
 }
 
+func New(size int) Board {
+	board := Board{
+		Board: make([][]Piece, size),
+		Size:  size,
+	}
+
+	for i := 0; i < size; i++ {
+		board.Board[i] = make([]Piece, size)
+	}
+
+	return board
+}
+
 func main() {
-	board_size := 10
+	// Standard go board size
+	board_size := 19
+	board := New(board_size)
 
 	fmt.Println("Go Game in Go Lang")
-
-	board := Board{
-		Board: make([][]Piece, board_size),
-		Size:  board_size,
-	}
-
-	for i := 0; i < board_size; i++ {
-		board.Board[i] = make([]Piece, board_size)
-	}
 
 	board.Display()
 
