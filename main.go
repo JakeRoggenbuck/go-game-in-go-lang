@@ -33,6 +33,11 @@ func (p Piece) String() string {
 	return strings[p]
 }
 
+func game_won(winner int) {
+	fmt.Printf("Player %d wins!\n", winner)
+	os.Exit(0)
+}
+
 type Board struct {
 	Board [][]Piece
 	Size  int
@@ -127,8 +132,7 @@ func main() {
 				}
 
 				// Game lost for current_player
-				fmt.Printf("Player %d wins!\n", winner)
-				os.Exit(0)
+				game_won(winner)
 			}
 			continue
 		}
