@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 type Piece int
 
@@ -54,7 +57,7 @@ func (b Board) Unset(i int, j int) {
 func (b Board) Display() {
 	fmt.Print("    ")
 	for i := 0; i < b.Size; i++ {
-		val := (i % 10 + 1)
+		val := (i%10 + 1)
 		if val > 9 {
 			val = 0
 		}
@@ -91,8 +94,14 @@ func main() {
 	board := New(board_size)
 
 	fmt.Println("Go Game in Go Lang")
+	fmt.Println("==================")
+	fmt.Println("1. For each turn, type in coordinates (e.g. 2, 3) to place your piece")
+	fmt.Println("2. Type -1 to pass")
+	fmt.Println()
 
 	current_player := 1
+
+	consecutive_passes := []int{0, 0}
 
 	// Game Loop
 	for {
@@ -105,10 +114,31 @@ func main() {
 
 		fmt.Print("Type in coordinates (e.g. 2, 3): ")
 		fmt.Scan(&x)
+
+		if x == -1 {
+			consecutive_passes[current_player-1] += 1
+			if consecutive_passes[current_player-1] == 2 {
+				var winner int
+
+				if current_player == 1 {
+					winner = 2
+				} else {
+					winner = 1
+				}
+
+				// Game lost for current_player
+				fmt.Printf("Player %d wins!\n", winner)
+				os.Exit(0)
+			}
+			continue
+		}
+
 		fmt.Scan(&y)
 
 		// Note the swap of x and y for i and j and the 1 indexed input coords
-		board.Set(y-1, x-1, Piece(current_player))
+		if board.CanPlace(y-1, x-1) {
+			board.Set(y-1, x-1, Piece(current_player))
+		}
 
 		if current_player == 1 {
 			current_player = 2
