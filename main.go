@@ -44,11 +44,17 @@ type Board struct {
 }
 
 func (b Board) Set(i int, j int, p Piece) {
-	b.Board[i][j] = p
+	if i < b.Size && j < b.Size {
+		b.Board[i][j] = p
+	}
 }
 
 func (b Board) Get(i int, j int) Piece {
-	return b.Board[i][j]
+	if i < b.Size && j < b.Size {
+		return b.Board[i][j]
+	}
+
+	return EMPTY
 }
 
 func (b Board) CanPlace(i int, j int) bool {
@@ -62,7 +68,7 @@ func (b Board) Unset(i int, j int) {
 func (b Board) Display() {
 	fmt.Print("    ")
 	for i := 0; i < b.Size; i++ {
-		val := (i%10 + 1)
+		val := ((i % 10) + 1)
 		if val > 9 {
 			val = 0
 		}
