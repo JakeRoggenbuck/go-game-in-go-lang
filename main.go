@@ -24,7 +24,8 @@ func (p Piece) Name() string {
 }
 
 func (p Piece) String() string {
-	strings := [...]string{"+", "B", "W"}
+	strings := [...]string{"+ ", "⚪", "⚫"}
+
 
 	if p < EMPTY || p > WHITE {
 		return "?"
@@ -82,7 +83,11 @@ func (b Board) Display() {
 			padding = " "
 		}
 
-		fmt.Printf("%s%d %v\n", padding, i+1, b.Board[i])
+		fmt.Printf(" %s%d ", padding, i+1)
+		for j := 0; j < b.Size; j++ {
+			fmt.Print(b.Board[i][j])
+		}
+		fmt.Print("\n")
 	}
 }
 
